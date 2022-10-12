@@ -74,7 +74,6 @@ function App() {
 	   getAllStudents()
 		   .then(res => res.json())
 		   .then(data => {
-				console.log(data);
 				setStudents(data);
 				setFetching(false);
 		   })
