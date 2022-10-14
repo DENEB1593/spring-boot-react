@@ -13,9 +13,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-react</name>
     <description>spring-boot-react</description>
+
     <properties>
         <java.version>11</java.version>
+        <app.image.name>springboot-react-fullstack</app.image.name>
+        <app.image.tag/>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -129,8 +133,131 @@
                                 </ports>
                                 <format>OCI</format>
                                 <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                                <environment>
+                                    <TZ>Asia/Seoul</TZ>
+                                </environment>
                             </container>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jib-push-to-dockerhub</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>2.5.2</version>
+                        <configuration>
+                            <from>
+                                <image>openjdk:11.0.14-jre-slim-bullseye</image>
+                            </from>
+                            <to>
+                                <image>docker.io/deneb1593/${app.image.name}:${app.image.tag}</image>
+                            </to>
+                            <container>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <format>OCI</format>
+                                <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                                <environment>
+                                    <TZ>Asia/Seoul</TZ>
+                                </environment>
+                            </container>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>push-custom-tag</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <to>
+                                        <image>docker.io/deneb1593/${app.image.name}:${app.image.tag}</image>
+                                    </to>
+                                </configuration>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>push-latest-tag</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <to>
+                                        <image>docker.io/deneb1593/${app.image.name}:latest</image>
+                                    </to>
+                                </configuration>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jib-push-to-local</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>2.5.2</version>
+                        <configuration>
+                            <from>
+                                <image>openjdk:11.0.14-jre-slim-bullseye</image>
+                            </from>
+                            <to>
+                                <image>deneb1593/${app.image.name}:${app.image.tag}</image>
+                            </to>
+                            <container>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <format>OCI</format>
+                                <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                                <environment>
+                                    <TZ>Asia/Seoul</TZ>
+                                </environment>
+                            </container>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>push-custom-tag</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <to>
+                                        <image>deneb1593/${app.image.name}:${app.image.tag}</image>
+                                    </to>
+                                </configuration>
+                                <goals>
+                                    <goal>dockerBuild</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>push-latest-tag</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <to>
+                                        <image>deneb1593/${app.image.name}:latest</image>
+                                    </to>
+                                </configuration>
+                                <goals>
+                                    <goal>dockerBuild</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
