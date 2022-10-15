@@ -13,6 +13,9 @@
 ### 실행
     docker run --name fullstack -p 8080:8080 spring-react-fullstack:v1
 
+### PostgreSQL
+    컨테이너실행: docker run --name db -p 5432:5432 --network=db -v "$PWD:/var/lib/postgresql/data" -e POSTGRES_PASSWORD=1234 -d postgres:alpine
+    컨테이너접속: docker run -it --rm --network=db postgres:alpine psql -h db -U postgres
 
 ### AWS ElastickBeansTalk 배포
     aws-elasticbeanstalk/docker-compose.yml 
