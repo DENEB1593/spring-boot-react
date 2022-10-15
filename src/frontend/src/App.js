@@ -1,35 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { getAllStudents } from "./client";
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty} from 'antd';
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button} from 'antd';
 import {
 	DesktopOutlined,
 	PieChartOutlined,
 	FileOutlined,
 	TeamOutlined,
 	UserOutlined,
-	LoadingOutlined,
+	LoadingOutlined, PlusOutlined,
 } from '@ant-design/icons';
 
 import './App.css';
+import StudentDrawerForm from "./StudentDrawerForm";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-
-const dataSource = [
-	{
-		key: '1',
-		name: 'Mike',
-		age: 32,
-		address: '10 Downing Street',
-	},
-	{
-		key: '2',
-		name: 'John',
-		age: 42,
-		address: '10 Downing Street',
-	},
-];
 
 const columns = [
 	{
@@ -69,6 +55,7 @@ function App() {
 	const [students, setStudents] = useState([]);
 	const [collapsed, setCollapsed] = useState(false);
 	const [fetching, setFetching] = useState(true);
+	const [showDrawer, setShowDrawer] = useState(false);
 
    const fetchStudents = () =>
 	   getAllStudents()
@@ -83,22 +70,39 @@ function App() {
 		fetchStudents();
    }, []);
 
-    const renderStudents = () => {
+	const addButton =
+		<Button
+			type="primary"
+			shape="round"
+			onClick={() => setShowDrawer(!showDrawer)}
+			icon={<PlusOutlined/>}
+			size="large">
+			Add New Student
+		</Button>;
+
+	const renderStudents = () => {
 		if (fetching) {
-			return <Spin indicator={antIcon} />;
+			return <Spin indicator={antIcon}/>;
 		}
 		if (students.length <= 0) {
-			return <Empty />;
+			return <Empty/>;
 		}
-		return <Table
-			dataSource={students}
-			columns={columns}
-			bordered
-			title={() => 'Student'}
-			pagination={{ pageSize: 50 }}
-			scroll={{ y: 1000 }}
-			rowKey={(student) => student.id}
-		/>;
+		return <>
+			<StudentDrawerForm
+				showDrawer={showDrawer}
+				setShowDrawer={setShowDrawer}
+				fetchStudents={fetchStudents}
+			/>
+			<Table
+				dataSource={students}
+				columns={columns}
+				bordered
+				title={() => addButton}
+				pagination={{pageSize: 50}}
+				scroll={{y: 1000}}
+				rowKey={(student) => student.id}
+			/>
+		</>;
     }
 
 
