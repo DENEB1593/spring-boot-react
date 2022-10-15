@@ -12,3 +12,8 @@
 
 ### 실행
     docker run --name fullstack -p 8080:8080 spring-react-fullstack:v1
+
+
+### AWS ElastickBeansTalk 배포
+    aws-elasticbeanstalk/docker-compose.yml 
+    
