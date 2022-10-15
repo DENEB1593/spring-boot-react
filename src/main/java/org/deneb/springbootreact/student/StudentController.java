@@ -1,22 +1,25 @@
 package org.deneb.springbootreact.student;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/students")
+@AllArgsConstructor
 public class StudentController {
+
+  private final StudentService studentService;
 
   @GetMapping
   public List<Student> findAll() {
-    return List.of(
-            new Student(1L, "john", "john@naver.com", Gender.MALE),
-            new Student(2L, "park", "park@daum.net", Gender.FEMALE),
-            new Student(3L, "kim", "kim@nate.com", Gender.MALE)
-    );
+    return studentService.findAll();
+  }
+
+  @PostMapping
+  public void save(@RequestBody Student student) {
+   studentService.save(student);
   }
 
 }
