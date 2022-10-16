@@ -22,9 +22,10 @@ export const saveStudent = (student) =>
     },
     method: 'POST',
     body: JSON.stringify(student)
-  });
+  }).then(checkStatus);
 
-export const deleteStudent = (e) => {
-  message.success('delete student success');
-  // message.error('delete student fail');
+export const deleteStudent = (id) => {
+  fetch(`api/v1/students/${id}`, {
+    method: 'DELETE',
+  }).then(checkStatus);
 };

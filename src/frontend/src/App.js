@@ -29,12 +29,12 @@ const StudentAvatar = ({name}) => {
 	return <Avatar>`${name.charAt(0)}``${name.charAt(name.length - 1)}`</Avatar>
 }
 
-const ActionButton = () => {
+const ActionButton = (student) => {
 	const [size, setSize] = useState('default');
 	return <>
 		<Popconfirm
 			title="Are you sure to delete this task?"
-			onConfirm={deleteStudent}
+			onConfirm={(student) => deleteStudent(student.id, fetchStudents)}
 			okText="Yes"
 			cancelText="No"
 		>
