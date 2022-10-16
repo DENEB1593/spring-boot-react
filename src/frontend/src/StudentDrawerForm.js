@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Drawer, Input, Col, Select, Form, Row, Button, Spin} from 'antd';
 import { saveStudent } from './client';
 import {LoadingOutlined} from "@ant-design/icons";
+import { successNotificationWithIcon, errorNotificationWithIcon } from './Notification'
 
 const {Option} = Select;
 
@@ -17,8 +18,11 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents}) {
     setSubmitting(true);
     saveStudent(student)
       .then(() => {
-        console.log('student saved');
         setSubmitting(false);
+        successNotificationWithIcon(
+          'Student saved success',
+          `${student.name} saved in system`
+        )
         onCLose();
         fetchStudents();
       }).catch(err => {
@@ -84,7 +88,6 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents}) {
             <Select placeholder="Please select a gender">
               <Option value="MALE">MALE</Option>
               <Option value="FEMALE">FEMALE</Option>
-              <Option value="OTHER">OTHER</Option>
             </Select>
           </Form.Item>
         </Col>

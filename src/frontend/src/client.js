@@ -1,4 +1,5 @@
 import fetch from 'unfetch';
+import {message} from "antd";
 
 const checkStatus = response => {
   if (response.ok) {
@@ -22,3 +23,8 @@ export const saveStudent = (student) =>
     method: 'POST',
     body: JSON.stringify(student)
   });
+
+export const deleteStudent = (e) => {
+  message.success('delete student success');
+  // message.error('delete student fail');
+};

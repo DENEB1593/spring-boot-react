@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { getAllStudents } from "./client";
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button} from 'antd';
+import {deleteStudent, getAllStudents} from "./client";
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Radio, Popconfirm} from 'antd';
 import {
 	DesktopOutlined,
 	PieChartOutlined,
@@ -17,7 +17,42 @@ import StudentDrawerForm from "./StudentDrawerForm";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
+const StudentAvatar = ({name}) => {
+	if (!name) {
+		return <Avatar icon={<UserOutlined />}/>
+	}
+	let trim = name.trim();
+	const split = trim.split(" ");
+	if (split.length === 1) {
+		return <Avatar>{name.charAt(0)}</Avatar>
+	}
+	return <Avatar>`${name.charAt(0)}``${name.charAt(name.length - 1)}`</Avatar>
+}
+
+const ActionButton = () => {
+	const [size, setSize] = useState('default');
+	return <>
+		<Popconfirm
+			title="Are you sure to delete this task?"
+			onConfirm={deleteStudent}
+			okText="Yes"
+			cancelText="No"
+		>
+			<Button size={size}>delete</Button>
+		</Popconfirm>
+
+		<Button size={size}>edit</Button>
+		</>
+}
+
+
 const columns = [
+	{
+		title: '',
+		dataIndex: 'avatar',
+		key: 'avatar',
+		render: (text, student) => <StudentAvatar name={student.name} />
+	},
 	{
 		title: 'Id',
 		dataIndex: 'id',
@@ -38,6 +73,12 @@ const columns = [
 		dataIndex: 'gender',
 		key: 'gender',
 	},
+	{
+		title: 'Actions',
+		dataIndex:'actions',
+		key: '',
+		render: () => <ActionButton/>
+},
 ];
 
 
@@ -71,6 +112,7 @@ function App() {
    }, []);
 
 	const addButton =
+		<>
 		<Button
 			type="primary"
 			shape="round"
@@ -78,7 +120,11 @@ function App() {
 			icon={<PlusOutlined/>}
 			size="large">
 			Add New Student
-		</Button>;
+		</Button>
+		<br/><br/>
+		<Tag>Number of students</Tag>
+		<Badge count={students.length} className="site-badge-count-4"/>
+		</>;
 
 	const renderStudents = () => {
 		if (fetching) {
