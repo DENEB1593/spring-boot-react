@@ -29,23 +29,6 @@ const StudentAvatar = ({name}) => {
 	return <Avatar>`${name.charAt(0)}``${name.charAt(name.length - 1)}`</Avatar>
 }
 
-const ActionButton = (student) => {
-	const [size, setSize] = useState('default');
-	return <>
-		<Popconfirm
-			title={`Are you sure to delete ${student.name}`}
-			onConfirm={() => deleteStudent(student.id)}
-			okText="Yes"
-			cancelText="No"
-		>
-			<Button size={size}>delete</Button>
-		</Popconfirm>
-
-		<Button size={size}>edit</Button>
-		</>
-}
-
-
 const columns = [
 	{
 		title: '',
@@ -77,7 +60,19 @@ const columns = [
 		title: 'Actions',
 		dataIndex:'actions',
 		key: '',
-		render: (student) => <ActionButton/>
+		render: (text, student) =>
+			<>
+				<Popconfirm
+					title={`Are you sure to delete ${student.name}`}
+					onConfirm={() => deleteStudent(student.id)}
+					okText="Yes"
+					cancelText="No"
+				>
+					<Button size="default">delete</Button>
+				</Popconfirm>
+
+				<Button size="default">edit</Button>
+			</>
 },
 ];
 

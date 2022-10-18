@@ -25,7 +25,6 @@ export const saveStudent = (student) =>
   }).then(checkStatus);
 
 export const deleteStudent = (id) => {
-  console.log(id);
   fetch(`api/v1/students/${id}`, {
     method: 'DELETE',
   }).then(checkStatus);
