@@ -33,8 +33,8 @@ const ActionButton = (student) => {
 	const [size, setSize] = useState('default');
 	return <>
 		<Popconfirm
-			title="Are you sure to delete this task?"
-			onConfirm={(student) => deleteStudent(student.id, fetchStudents)}
+			title={`Are you sure to delete ${student.name}`}
+			onConfirm={() => deleteStudent(student.id)}
 			okText="Yes"
 			cancelText="No"
 		>
@@ -77,7 +77,7 @@ const columns = [
 		title: 'Actions',
 		dataIndex:'actions',
 		key: '',
-		render: () => <ActionButton/>
+		render: (student) => <ActionButton/>
 },
 ];
 
