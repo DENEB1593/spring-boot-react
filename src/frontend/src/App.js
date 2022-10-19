@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import {deleteStudent, getAllStudents} from "./client";
-import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Radio, Popconfirm} from 'antd';
+import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm} from 'antd';
 import {
 	DesktopOutlined,
 	PieChartOutlined,
@@ -29,7 +29,7 @@ const StudentAvatar = ({name}) => {
 	return <Avatar>`${name.charAt(0)}``${name.charAt(name.length - 1)}`</Avatar>
 }
 
-const columns = [
+const columns = fetchStudents => [
 	{
 		title: '',
 		dataIndex: 'avatar',
@@ -64,7 +64,7 @@ const columns = [
 			<>
 				<Popconfirm
 					title={`Are you sure to delete ${student.name}`}
-					onConfirm={() => deleteStudent(student.id)}
+					onConfirm={() => deleteStudent(student.id, fetchStudents)}
 					okText="Yes"
 					cancelText="No"
 				>
@@ -136,7 +136,7 @@ function App() {
 			/>
 			<Table
 				dataSource={students}
-				columns={columns}
+				columns={columns(fetchStudents)}
 				bordered
 				title={() => addButton}
 				pagination={{pageSize: 50}}

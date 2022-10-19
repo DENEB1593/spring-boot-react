@@ -1,5 +1,6 @@
 import fetch from 'unfetch';
 import {message} from "antd";
+import {successNotificationWithIcon} from "./Notification";
 
 const checkStatus = response => {
   if (response.ok) {
@@ -24,8 +25,11 @@ export const saveStudent = (student) =>
     body: JSON.stringify(student)
   }).then(checkStatus);
 
-export const deleteStudent = (id) => {
+export const deleteStudent = (id, callback) => {
   fetch(`api/v1/students/${id}`, {
     method: 'DELETE',
-  }).then(checkStatus);
+  }).then(() => {
+    successNotificationWithIcon("Student deleted", `student with ${id} was deleted`)
+    callback();
+  });
 };
