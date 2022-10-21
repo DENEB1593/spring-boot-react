@@ -13,6 +13,7 @@ import {
 
 import './App.css';
 import StudentDrawerForm from "./StudentDrawerForm";
+import {errorNotificationWithIcon} from "./Notification";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -99,7 +100,14 @@ function App() {
 		   .then(data => {
 				setStudents(data);
 				setFetching(false);
-		   })
+		   }).catch(err => {
+				err.response.json().then(res => {
+					errorNotificationWithIcon(
+						'There was an issue',
+						`${res.message} [${res.status}] [${res.error}]`
+					)
+				})
+			 }).finally(() => setFetching(false));
 
    useEffect(() => {
 		console.log('Component Mounted');
