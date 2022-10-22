@@ -2,14 +2,7 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import {deleteStudent, getAllStudents} from "./client";
 import {Layout, Menu, Breadcrumb, Table, Spin, Empty, Button, Badge, Tag, Avatar, Popconfirm} from 'antd';
-import {
-	DesktopOutlined,
-	PieChartOutlined,
-	FileOutlined,
-	TeamOutlined,
-	UserOutlined,
-	LoadingOutlined, PlusOutlined,
-} from '@ant-design/icons';
+import { DesktopOutlined, PieChartOutlined, FileOutlined, TeamOutlined, UserOutlined, LoadingOutlined, PlusOutlined, } from '@ant-design/icons';
 
 import './App.css';
 import StudentDrawerForm from "./StudentDrawerForm";
