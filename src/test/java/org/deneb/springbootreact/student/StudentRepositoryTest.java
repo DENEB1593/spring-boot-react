@@ -15,10 +15,6 @@ class StudentRepositoryTest {
   @Autowired
   private StudentRepository underTest;
 
-  @AfterAll
-  void after() {
-    underTest.deleteAll();
-  }
 
   @Test
   void itShouldCheckWhenStudentEmailExists() {
