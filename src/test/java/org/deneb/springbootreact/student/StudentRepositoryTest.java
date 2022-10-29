@@ -1,5 +1,6 @@
 package org.deneb.springbootreact.student;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +14,11 @@ class StudentRepositoryTest {
 
   @Autowired
   private StudentRepository underTest;
+
+  @AfterAll
+  void after() {
+    underTest.deleteAll();
+  }
 
   @Test
   void itShouldCheckWhenStudentEmailExists() {
